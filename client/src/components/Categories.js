@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { connect } from 'react-redux';
-import { fetchCategories } from '../actions';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
+import { fetchCategories } from '../actions';
 class Categories extends Component {
   componentDidMount() {
     this.props.fetchCategories();
@@ -39,16 +39,16 @@ class Categories extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  categories: state.categories
-})
+
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories())
   }
 }
-
+const mapStateToProps = state => ({
+  categories: state.categories
+})
 export default connect(
   mapStateToProps,
   mapDispatchToProps

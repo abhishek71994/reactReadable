@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { fetchPost, deletePost, fetchCommentsForPost, sortComments, toggleCommentEdit } from '../actions';
 import Comment from './Comment';
+import sortBy from 'sort-by';
 import CommentForm from './CommentForm';
 import PostDoesNotExist from './PostDoesNotExist';
 import PostSummary from './PostSummary';
 import Remarkable from 'remarkable';
-import sortBy from 'sort-by';
 
 class Post extends Component {
   constructor(props) {
@@ -46,15 +46,16 @@ class Post extends Component {
     });
   }
 
-  deleteThisPost() {
-    this.props.delete(this.props.post.id,
-      () => { this.props.history.push('/') }
-    );
-  }
+  
 
   displayMarkdown(rawMarkdown) {
     var md = new Remarkable();
     return { __html: md.render(rawMarkdown) };
+  }
+  deleteThisPost() {
+    this.props.delete(this.props.post.id,
+      () => { this.props.history.push('/') }
+    );
   }
 
   render() {
@@ -121,14 +122,7 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    post: state.posts[ownProps.match.params.id],
-    comments: _.filter(state.comments, { 'parentId': ownProps.match.params.id }),
-    commentSortOrder: state.sorts.commentSort,
-    commentToEdit: state.editing.commentId,
-  };
-}
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -138,6 +132,14 @@ function mapDispatchToProps(dispatch) {
     sortComments: (data) => dispatch(sortComments(data)),
     toggleCommentEdit: (data) => dispatch(toggleCommentEdit(data)),
   }
+}
+function mapStateToProps(state, ownProps) {
+  return {
+    post: state.posts[ownProps.match.params.id],
+    comments: _.filter(state.comments, { 'parentId': ownProps.match.params.id }),
+    commentSortOrder: state.sorts.commentSort,
+    commentToEdit: state.editing.commentId,
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { upVotePost, downVotePost, fetchCommentsForPost, deletePost } from '../actions';
+import * as _ from 'lodash';
 import { getDateString } from '../utils/utilities';
 import Voter from './Voter';
-import * as _ from 'lodash';
 
 class PostSummary extends Component {
   getCommentCount() {
@@ -58,12 +58,7 @@ class PostSummary extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    post: state.posts[ownProps.postId],
-    comments: state.comments,
-  }
-}
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -73,7 +68,12 @@ function mapDispatchToProps(dispatch) {
     delete: (id, callback) => dispatch(deletePost(id, callback))
   }
 }
-
+function mapStateToProps(state, ownProps) {
+  return {
+    post: state.posts[ownProps.postId],
+    comments: state.comments,
+  }
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps

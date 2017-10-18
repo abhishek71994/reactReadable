@@ -1,36 +1,19 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { addComment, editComment, toggleCommentEdit } from '../actions';
 import uuid from 'uuid';
+import { addComment, editComment, toggleCommentEdit } from '../actions';
 
 class CommentForm extends Component {
   renderTextField(field) {
-    const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? 'has-danger' : ''}`;
+    const { meta: { touched, error } } = field;
 
     return (
       <div className={className}>
         <label>{field.label}</label>
         <div className='eight wide field'>
           <input className='form-control' type='text' placeholder={field.placeholder} {...field.input} />
-        </div>
-        <div className='error-text'>
-          {touched ? error : ''}
-        </div>
-      </div>
-    );
-  }
-
-  renderMarkdownField(field) {
-    const { meta: { touched, error } } = field;
-    const className = `form-group ${touched && error ? 'has-danger' : ''}`;
-
-    return (
-      <div className={className}>
-        <label>{field.label}</label>
-        <div className='eight wide field'>
-          <textarea placeholder={field.placeholder} {...field.input} />
         </div>
         <div className='error-text'>
           {touched ? error : ''}
@@ -53,6 +36,25 @@ class CommentForm extends Component {
 
     this.props.toggleCommentEdit('');
   }
+
+  renderMarkdownField(field) {
+    const { meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`;
+
+    return (
+      <div className={className}>
+        <label>{field.label}</label>
+        <div className='eight wide field'>
+          <textarea placeholder={field.placeholder} {...field.input} />
+        </div>
+        <div className='error-text'>
+          {touched ? error : ''}
+        </div>
+      </div>
+    );
+  }
+
+  
 
   render() {
     const { handleSubmit, submitting, heading } = this.props;

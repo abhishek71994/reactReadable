@@ -11,13 +11,15 @@ class Comment extends Component {
     this.props.delete(this.props.comment.id);
   }
 
-  toggleEdit(id) {
-    this.props.editComment(id);
-  }
+  
 
   displayMarkdown(rawMarkdown) {
     var md = new Remarkable();
     return { __html: md.render(rawMarkdown) };
+  }
+
+  toggleEdit(id) {
+    this.props.editComment(id);
   }
 
   render() {
@@ -51,11 +53,7 @@ class Comment extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
 
-  }
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -65,7 +63,11 @@ function mapDispatchToProps(dispatch) {
     editComment: (id) => dispatch(toggleCommentEdit(id)),
   }
 }
+function mapStateToProps(state, ownProps) {
+  return {
 
+  }
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps
